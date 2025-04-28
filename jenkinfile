@@ -12,7 +12,7 @@ pipeline {
 
         stage('build') {
             steps {
-                sh 'node calculator.js'
+                sh 'docker run -t node-calculator:v1'
             }
         }
 
