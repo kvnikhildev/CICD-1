@@ -31,7 +31,16 @@ pipeline {
                 script {
                     // Run SonarQube analysis using the SonarQube Scanner
                     withSonarQubeEnv(SONARQUBE_SERVER) {
-                        sh 'npx sonar-scanner'
+                        sh 'npx sonar-scanner' \
+                    -Dsonar.projectKey=my-nodejs-app \
+                    -Dsonar.projectName="My NodeJS App" \
+                    -Dsonar.projectVersion=1.0 \
+                    -Dsonar.sources=src \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.login=$SONAR_TOKEN
+                '''
+
+                  
                     }
                 }
             }
