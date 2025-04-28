@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        // SonarQube server name configured in Jenkins
+        SONARQUBE_SERVER = 'sonar-server'
+    }
 
     stages {
 
@@ -22,11 +26,7 @@ pipeline {
             }
         }
 
-        stage('test') {
-             environment {
-               // SonarQube server name configured in Jenkins
-               SONARQUBE_SERVER = 'sonar-server'
-            }
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     // Run SonarQube analysis using the SonarQube Scanner
@@ -36,6 +36,7 @@ pipeline {
                 }
             }
         }
+    
         
     }
 }
