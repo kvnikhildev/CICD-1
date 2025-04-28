@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('git check out ') {
+            steps {
+               git branch: 'main', url: 'https://github.com/kvnikhildev/CICD-1.git'
+            }
+        }
+
+
+        stage('build') {
+            steps {
+                sh 'node calculator.js'
+            }
+        }
+
+        stage('test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        
+    }
+}
