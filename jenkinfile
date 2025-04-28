@@ -21,6 +21,21 @@ pipeline {
                 sh 'npm audit $$ npm test'
             }
         }
+
+        stage('test') {
+             environment {
+               // SonarQube server name configured in Jenkins
+               SONARQUBE_SERVER = 'sonar-server'
+            }
+            steps {
+                script {
+                    // Run SonarQube analysis using the SonarQube Scanner
+                    withSonarQubeEnv(SONARQUBE_SERVER) {
+                        sh 'npx sonar-scanner'
+                    }
+                }
+            }
+        }
         
     }
 }
