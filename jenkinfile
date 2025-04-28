@@ -12,13 +12,13 @@ pipeline {
 
         stage('build') {
             steps {
-                sh 'docker build -t node-calculator:v1 .'
+                sh 'docker build -t node-webv1 .'
             }
         }
 
         stage('test') {
             steps {
-                sh 'npm test'
+                sh 'npm audit'
             }
         }
         
