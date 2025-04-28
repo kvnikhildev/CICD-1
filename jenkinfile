@@ -1,10 +1,6 @@
 pipeline {
     agent any
-    environment {
-        // SonarQube server name configured in Jenkins
-        SONARQUBE_SERVER = 'sonar-server'
-    }
-
+    
     stages {
 
         stage('git check out ') {
@@ -26,26 +22,16 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Static Code Analysis') {
+            environment {
+              SONAR_URL = "http://localhost:9000"
+             }
             steps {
-                script {
-                    // Run SonarQube analysis using the SonarQube Scanner
-                    withSonarQubeEnv(SONARQUBE_SERVER) {
-                        sh 'npx sonar-scanner' \
-                    -Dsonar.projectKey=my-nodejs-app \
-                    -Dsonar.projectName="My NodeJS App" \
-                    -Dsonar.projectVersion=1.0 \
-                    -Dsonar.sources=src \
-                    -Dsonar.host.url=http://localhost:9000 \
-                    -Dsonar.login=$SONAR_TOKEN
-                '''
-
-                  
-                    }
-                }
+            withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+            sh 'sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
             }
-        }
-    
+         }
+      }  
         
     }
 }
