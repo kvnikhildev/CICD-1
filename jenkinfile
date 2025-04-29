@@ -4,7 +4,7 @@ pipeline {
     environment {
         SONARQUBE = 'sonar-server' // Name from Jenkins > Manage Jenkins > Configure System
         SONAR_PROJECT_KEY = 'my_node_project'
-        SONAR_TOKEN = credentials('sonarqube') // Use Jenkins credentials plugin
+        
     }
 
     
