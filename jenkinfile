@@ -1,5 +1,12 @@
 pipeline {
     agent any
+
+    environment {
+        SONARQUBE = 'sonar-server' // Name from Jenkins > Manage Jenkins > Configure System
+        SONAR_PROJECT_KEY = 'my_node_project'
+        SONAR_TOKEN = credentials('sonarqube') // Use Jenkins credentials plugin
+    }
+
     
     stages {
 
@@ -23,12 +30,17 @@ pipeline {
         }
 
         stage('Static Code Analysis') {
-            environment {
-              SONAR_URL = "http://localhost:9000"
-             }
+            
             steps {
-            withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-            sh 'sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+            withSonarQubeEnv("${SONARQUBE}") {
+                    sh """
+                        npx sonar-scanner \
+                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                        -Dsonar.sources=app.js
+                        -Dsonar.tests=test.js
+                        -Dsonar.exclusions=onar-project.properties,Dockerfile,jenkinfile,,**/node_modules/**,package-lock.json,package.json
+                        
+                    """
             }
          }
       }  
