@@ -36,8 +36,8 @@ pipeline {
                     sh """
                         npx sonar-scanner \
                         -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                        -Dsonar.sources=app.js
-                        -Dsonar.tests=test.js
+                        -Dsonar.sources=app.js \
+                        -Dsonar.tests=test.js \
                         -Dsonar.exclusions=onar-project.properties,Dockerfile,jenkinfile,,**/node_modules/**,package-lock.json,package.json
                         
                     """
