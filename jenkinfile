@@ -81,7 +81,7 @@ pipeline {
                             git config --global user.name "kvnikhildev"
                             git config --global user.email "kvnikhildev@gmail.com"
                             BUILD_NUMBER=${env.BUILD_NUMBER}
-                            sed -i "s/replaceImageTag/${env.BUILD_NUMBER}/g" Nodejs-manifest/deployment.yml
+                            sed -i "s/replaceImageTag/${env.BUILD_NUMBER}/g" CICD-1/Nodejs-manifest/deployment.ymlss
                             git add /Nodejs-manifest/deployment.yml
                             git commit -m "Updated image tag to ${env.BUILD_NUMBER}"
                             git push https://$GITHUB_TOKEN@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
