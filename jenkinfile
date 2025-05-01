@@ -34,7 +34,7 @@ pipeline {
             steps {
             withSonarQubeEnv("${SONARQUBE}") {
                     sh """
-                        npx sonar-scanner \
+                         npx sonar-scanner \
                         -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                         -Dsonar.sources=app.js \
                         -Dsonar.tests=test.js \
@@ -63,7 +63,35 @@ pipeline {
                     }
                  }
             }  
+    
         }
+
+
+        stage('upload to github') {
+
+            environment {
+                GIT_REPO_NAME = 'CICD-1'
+                GIT_USER_NAME = 'kvnikhildev'
+                
+            }
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', Variable:'GITHUB_TOKEN')]) {
+                        sh """
+                            git config --global user.name "kvnikhildev"
+                            git config --global user.email "kvnikhildev@gmail.com"
+                            BUILD_NUMBER=${BUILD_NUMBER}
+                            sed -i ""s/replaceImageTag/${BUILD_NUMBER}/g" /Nodejs-manifest/deployment.yml
+                            git add /Nodejs-manifest/deployment.yml
+                            git commit -m "Updated image tag to ${BUILD_NUMBER}"
+                            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+                        """ 
+                    }
+                }
+            }
+        }
+        
+
     }
 
 }
