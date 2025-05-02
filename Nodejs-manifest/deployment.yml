@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: node-web
-        image: kvnikhill/replaceImageTag
+        image: kvnikhill/59
         ports:
         - containerPort: 3000
