@@ -7,8 +7,8 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {  // 👈 CHANGE HERE
+  console.log(`Server is running at http://0.0.0.0:${port}`);
 });
 
 module.exports = app;  // Export app for testing purposes
