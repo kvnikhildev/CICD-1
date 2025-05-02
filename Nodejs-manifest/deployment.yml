@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: node-web
-        image: kvnikhill/nodeproject1:replaceImageTag
+        image: kvnikhill/nodeproject1:61
         ports:
         - containerPort: 3000
