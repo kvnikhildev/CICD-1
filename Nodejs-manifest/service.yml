@@ -4,7 +4,7 @@ metadata:
   name: node-web
 spec:
   selector:
-    app.kubernetes.io/name: node-web
+    app: node-web
   ports:
     - protocol: TCP
       port: 3000
